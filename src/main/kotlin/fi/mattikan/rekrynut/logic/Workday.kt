@@ -2,7 +2,10 @@ package main.kotlin.fi.mattikan.rekrynut.logic
 
 import java.time.LocalDate
 
-class Workday (val date: LocalDate, var regularHours: Double, var eveningHours: Double) {
+data class Workday (val date: LocalDate) {
+
+    var regularHours: Double = 0.00
+    var eveningHours: Double = 0.00
 
     fun addHours(hours: Double, eveningHours: Double) {
         this.regularHours += hours
