@@ -20,6 +20,7 @@ fun writeToFile(path: String, content: String) {
     }
 }
 
+// just returns a nice output string for writing to file
 fun employeesToString(employees: List<Employee>, path: String): String {
     var output = ""
     output += "Wages calculated from: $path \n"

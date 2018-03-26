@@ -9,7 +9,6 @@ fun readFile(hourlist: File): String {
     return hourlist.inputStream().bufferedReader().use { it.readText() }
 }
 
-// this is where the heavy crunching happens
 fun readHourlist(hourlist: File): List<Employee> {
     var employees = ArrayList<Employee>()
     try {
@@ -18,8 +17,8 @@ fun readHourlist(hourlist: File): List<Employee> {
         var hourlist = hourlist.inputStream().bufferedReader().use { it.readText() }.split("\n")
 
         // process the input line by line
-        // if employee exists: just push the line to its addShift
-        // if employee doesn't exist: create it and push the line to its addShift
+        // if employee exists: just chuck the line's relevant bits to its addShift
+        // if employee doesn't exist: create it and throw the line's relevant bits to its addShift
         // simple, easy and fun
         for (line in hourlist) {
 
