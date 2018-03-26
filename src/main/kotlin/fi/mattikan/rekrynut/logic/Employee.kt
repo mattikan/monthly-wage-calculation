@@ -35,9 +35,8 @@ data class Employee(val ID: String, val name: String) {
                     eveningHours += hoursFromTimeToTime(starttime, morning)
                     regularHours += hoursFromTimeToTime(morning, endtime)
                 } else {
-                    eveningHours += hoursFromTimeToTime(starttime, morning)
+                    eveningHours += hoursFromTimeToTime(starttime, morning) + hoursFromTimeToTime(evening, endtime)
                     regularHours += hoursFromTimeToTime(morning, evening)
-                    eveningHours += hoursFromTimeToTime(evening, endtime)
                 }
             } else if (starttime.isBefore(evening)) {
                 if (endtime.isAfter(evening)) {
