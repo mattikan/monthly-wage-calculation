@@ -2,7 +2,6 @@ package main.kotlin.fi.mattikan.rekrynut.io
 
 import main.kotlin.fi.mattikan.rekrynut.logic.Employee
 import java.io.File
-import java.text.SimpleDateFormat
 import java.util.*
 
 // pretty self-explanatory what this does

@@ -13,7 +13,6 @@ data class Workday(val date: LocalDate) {
     }
 
     fun overtime(): Double {
-        // todo: calculate overtime compensation
         val totalHours = regularHours + eveningHours
         var overtime: Double
         when (totalHours) {
@@ -26,7 +25,7 @@ data class Workday(val date: LocalDate) {
     }
 
     fun totalWage(): Double {
-        return (regularHours + eveningHours) * 4.25 + eveningHours * 1.25 + overtime() //todo: plus overtime
+        return (regularHours + eveningHours) * 4.25 + eveningHours * 1.25 + overtime()
     }
 }
 
