@@ -6,16 +6,15 @@ data class Workday(val date: LocalDate) {
     val wage = 4.25
     val eveningBonus = 1.25
 
-    var regularHours: Double = 0.00
+    var totalHours: Double = 0.00
     var eveningHours: Double = 0.00
 
-    fun addHours(regularHours: Double, eveningHours: Double) {
-        this.regularHours += regularHours
+    fun addHours(totalHours: Double, eveningHours: Double) {
+        this.totalHours += totalHours
         this.eveningHours += eveningHours
     }
 
     fun overtime(): Double {
-        val totalHours = regularHours + eveningHours
         var overtime: Double
         when (totalHours) {
             in 0.00..8.00 -> overtime = 0.00
@@ -27,7 +26,7 @@ data class Workday(val date: LocalDate) {
     }
 
     fun totalWage(): Double {
-        return (regularHours + eveningHours) * wage + eveningHours * eveningBonus + overtime()
+        return (totalHours * wage) + (eveningHours * eveningBonus) + overtime()
     }
 }
 

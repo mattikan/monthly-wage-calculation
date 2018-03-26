@@ -27,7 +27,7 @@ fun employeesToString(employees: List<Employee>, path: String): String {
     for (employee in employeesSorted) {
         println(employee)
         println("Days worked: ${employee.workdays.size}")
-        val hours = employee.workdays.sumByDouble { it.regularHours + it.eveningHours }
+        val hours = employee.workdays.sumByDouble { it.totalHours + it.eveningHours }
         println("Hours worked: $hours, which includes ${employee.workdays.sumByDouble { it.eveningHours }} evening compensation hours")
         val dosh = employee.workdays.sumByDouble { it.totalWage() }.toBigDecimal().setScale(2, RoundingMode.HALF_UP)
         println("Dosh earned: ${dosh}")

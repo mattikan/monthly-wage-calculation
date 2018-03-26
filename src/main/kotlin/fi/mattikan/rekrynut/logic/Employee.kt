@@ -1,5 +1,6 @@
 package main.kotlin.fi.mattikan.rekrynut.logic
 
+import java.lang.Double.max
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -25,56 +26,40 @@ data class Employee(val ID: String, val name: String) {
         val starttime = LocalTime.parse(start, dtf)
         val endtime = LocalTime.parse(end, dtf)
 
-        var regularHours = 0.00
+        var totalHours = 0.00
         var eveningHours = 0.00
-        if (endtime.isAfter(starttime)) { // shift didn't cross midnight
-            if (starttime.isBefore(morning)) {
-                if (endtime.isBefore(morning)) {
-                    eveningHours += hoursFromTimeToTime(starttime, endtime)
-                } else if (!endtime.isAfter(evening)) {
-                    eveningHours += hoursFromTimeToTime(starttime, morning)
-                    regularHours += hoursFromTimeToTime(morning, endtime)
-                } else {
-                    eveningHours += hoursFromTimeToTime(starttime, morning) + hoursFromTimeToTime(evening, endtime)
-                    regularHours += hoursFromTimeToTime(morning, evening)
-                }
-            } else if (starttime.isBefore(evening)) {
-                if (endtime.isAfter(evening)) {
-                    regularHours += hoursFromTimeToTime(starttime, evening)
-                    eveningHours += hoursFromTimeToTime(evening, endtime)
-                } else {
-                    regularHours += hoursFromTimeToTime(starttime, endtime)
-                }
-            } else {
+
+        if (starttime.isBefore(endtime)) {
+            totalHours += hoursFromTimeToTime(starttime, endtime)
+            if (!endtime.isAfter(morning)) {
                 eveningHours += hoursFromTimeToTime(starttime, endtime)
+            } else if (!starttime.isBefore(evening)) {
+                eveningHours += totalHours
+            } else {
+                eveningHours += max(hoursFromTimeToTime(evening, endtime), 0.00)
             }
-        } else { // shift crossed midnight :(
-            if (starttime.isBefore(evening)) {
-                regularHours += hoursFromTimeToTime(starttime, evening)
-                eveningHours += hoursFromTimeToTime(evening, midnight) + 24.00
-                if (endtime.isAfter(morning)) {
-                    regularHours += hoursFromTimeToTime(morning, endtime)
-                    eveningHours += hoursFromTimeToTime(midnight, morning)
+        } else {
+            totalHours += (hoursFromTimeToTime(starttime, midnight) + 24.00) + hoursFromTimeToTime(midnight, endtime)
+            if (starttime.isBefore(morning)) {
+                eveningHours += hoursFromTimeToTime(starttime, morning) + 5.00 + hoursFromTimeToTime(midnight, endtime)
+            } else if (!starttime.isAfter(evening)) {
+                eveningHours += 5.00
+                if (!endtime.isBefore(morning)) {
+                    eveningHours += 6.00
                 } else {
                     eveningHours += hoursFromTimeToTime(midnight, endtime)
                 }
-            } else { // starttime is after evening and endtime is after midnight
+            } else { // start time IS after evening
                 eveningHours += hoursFromTimeToTime(starttime, midnight) + 24.00
-                if (endtime.isAfter(morning)) {
-                    eveningHours += hoursFromTimeToTime(midnight, morning)
-                    if (endtime.isAfter(evening)) {
-                        regularHours += hoursFromTimeToTime(morning, evening)
-                        eveningHours += hoursFromTimeToTime(evening, endtime)
-                    } else {
-                        regularHours += hoursFromTimeToTime(morning, endtime)
-                    }
+                if (!endtime.isBefore(morning)) {
+                    eveningHours += 6.00
                 } else {
                     eveningHours += hoursFromTimeToTime(midnight, endtime)
                 }
             }
         }
-        println("regular hours: $regularHours, evening hours: $eveningHours\n")
-        if (regularHours < 0.00 || eveningHours < 0.00) {
+        println("regular hours: $totalHours, evening hours: $eveningHours\n")
+        if ((totalHours < 0.00 || eveningHours < 0.00) || (eveningHours > totalHours)) {
             throw Exception()
         }
 
@@ -83,7 +68,7 @@ data class Employee(val ID: String, val name: String) {
             workday = Workday(date)
             workdays.add(workday)
         }
-        workday.addHours(regularHours, eveningHours)
+        workday.addHours(totalHours, eveningHours)
     }
 }
 
