@@ -43,13 +43,14 @@ fun readHourlist(hourlist: File): List<Employee> {
 
         }
     } catch (e: Exception) {
-        println(e.stackTrace)
+        println(e.localizedMessage)
         println("Something went wrong with reading the file.")
     }
     println("Reading in employees done.\n")
     return employees
 }
 
+// could use some work...
 fun checkLineValidity(line: List<String>): Boolean {
     return (line.size == 5
             && line[2].split(".").size == 3
