@@ -3,6 +3,7 @@ package main.kotlin.fi.mattikan.rekrynut
 import main.kotlin.fi.mattikan.rekrynut.io.*
 import main.kotlin.fi.mattikan.rekrynut.logic.Employee
 import java.math.RoundingMode
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 fun main(args: Array<String>) {
@@ -33,14 +34,7 @@ fun main(args: Array<String>) {
         output += "${employee.ID}, ${employee.name}, \$$dosh \n"
     }
 
-    writeToFile("monthly_wages_${LocalDateTime.now().nano}", output)
+    writeToFile("monthly_wages_${System.currentTimeMillis()}", output)
 
-//    var dtf = DateTimeFormatter.ofPattern("HH:mm")
-//    var time1 = LocalTime.parse("23:00", dtf)
-//    var time2 = LocalTime.parse("00:00", dtf)
-//    println(time1.until(time2, MINUTES)/60.00)
-//    println(MINUTES.between(time1, time2)/60.00)
-
-
-    // todo: all of output
+    // todo: some sort of GUI
 }
