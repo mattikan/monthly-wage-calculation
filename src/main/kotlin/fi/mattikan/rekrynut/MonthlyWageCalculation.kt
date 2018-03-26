@@ -20,7 +20,7 @@ class MonthlyWageCalculation : Application() {
         if (file.exists()) {
             employees = readHourlist(file)
             val output = employeesToString(employees, file.path)
-            writeToFile("monthly_wages_${System.currentTimeMillis()}", output)
+            writeToFile("monthly_wages_${System.currentTimeMillis()}.txt", output)
         }
     }
 
