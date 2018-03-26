@@ -30,12 +30,14 @@ fun readHourlist(path: String): List<Employee> {
                 println("Line is malformed, skipping")
                 continue
             }
-            var found = employees.find { it.ID.equals(lineSplit[0]) && it.name.equals(lineSplit[1]) }
+            var found = employees.find { it.ID.equals(lineSplit[1]) && it.name.equals(lineSplit[0]) }
 
             if (found != null) {
+                println("Found existing employee! ${lineSplit[0]}")
                 found.newShift(lineSplit[2], lineSplit[3], lineSplit[4])
             } else {
-                found = Employee(lineSplit[0], lineSplit[1])
+                println("Creating new employee! ${lineSplit[0]}")
+                found = Employee(lineSplit[1], lineSplit[0])
                 employees.add(found)
                 found.newShift(lineSplit[2], lineSplit[3], lineSplit[4])
             }
@@ -45,10 +47,7 @@ fun readHourlist(path: String): List<Employee> {
         println(e.stackTrace)
         println("Something went wrong with reading the file.")
     }
-
-    for (employee in employees) {
-        println(employee)
-    }
+    println("Reading in employees done.\n")
     return employees
 }
 
