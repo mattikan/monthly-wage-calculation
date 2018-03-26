@@ -11,12 +11,12 @@ fun readFile(hourlist: File): String {
 }
 
 // this is where the heavy crunching happens
-fun readHourlist(path: String): List<Employee> {
+fun readHourlist(hourlist: File): List<Employee> {
     var employees = ArrayList<Employee>()
     try {
 
         // time to do all the reading in of the hour list
-        var hourlist = readFile(File(path)).split("\n")
+        var hourlist = hourlist.inputStream().bufferedReader().use { it.readText() }.split("\n")
 
         // process the input line by line
         // if employee exists: just push the line to its addShift
