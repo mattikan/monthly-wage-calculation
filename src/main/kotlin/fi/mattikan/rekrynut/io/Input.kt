@@ -6,8 +6,7 @@ import java.util.*
 
 // pretty self-explanatory what this does
 fun readFile(hourlist: File): String {
-    val inputStream = hourlist.inputStream().bufferedReader().use { it.readText() }
-    return inputStream
+    return hourlist.inputStream().bufferedReader().use { it.readText() }
 }
 
 // this is where the heavy crunching happens
