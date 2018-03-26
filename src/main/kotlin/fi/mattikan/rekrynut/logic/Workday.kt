@@ -3,6 +3,8 @@ package main.kotlin.fi.mattikan.rekrynut.logic
 import java.time.LocalDate
 
 data class Workday(val date: LocalDate) {
+    val wage = 4.25
+    val eveningBonus = 1.25
 
     var regularHours: Double = 0.00
     var eveningHours: Double = 0.00
@@ -17,15 +19,15 @@ data class Workday(val date: LocalDate) {
         var overtime: Double
         when (totalHours) {
             in 0.00..8.00 -> overtime = 0.00
-            in 8.00..11.00 -> overtime = (totalHours - 8.00) * 4.25 * 0.25
-            in 11.00..12.00 -> overtime = (3 * 4.25 * 0.25) + ((totalHours - 11.00) * 4.25 * 0.50)
-            else -> overtime = (3 * 4.25 * 0.25) + (4.25 * 0.50) + ((totalHours - 12.00) * 4.25)
+            in 8.00..11.00 -> overtime = (totalHours - 8.00) * wage * 0.25
+            in 11.00..12.00 -> overtime = (3 * wage * 0.25) + ((totalHours - 11.00) * wage * 0.50)
+            else -> overtime = (3 * wage * 0.25) + (wage * 0.50) + ((totalHours - 12.00) * wage)
         }
         return overtime
     }
 
     fun totalWage(): Double {
-        return (regularHours + eveningHours) * 4.25 + eveningHours * 1.25 + overtime()
+        return (regularHours + eveningHours) * wage + eveningHours * eveningBonus + overtime()
     }
 }
 
