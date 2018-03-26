@@ -21,6 +21,7 @@ class MonthlyWageCalculation : Application() {
             employees = readHourlist(file)
             val output = employeesToString(employees, file.path)
             writeToFile("monthly_wages_${System.currentTimeMillis()}.txt", output)
+            System.exit(1)
         }
     }
 
